@@ -11,16 +11,19 @@ const IndexRoute = ReactRouter.IndexRoute;
 const hashHistory = ReactRouter.hashHistory;
 //Components
 const App = require('./components/app');
-const LoginForm = require('./components/login_form');
+const LoginForm2 = require('./components/login_form2');
 //Auth
 const SessionStore = require('./stores/session_store');
 const SessionActions = require('./actions/session_actions');
 
+const Modal = require("react-modal");
+
+
 const appRouter = (
   <Router history={ hashHistory }>
     <Route path="/" component={ App } >
-      <Route path="/login" component={ LoginForm } />
-      <Route path="/signup" component={ LoginForm } />
+      <Route path="/login" component={ LoginForm2 } />
+      <Route path="/signup" component={ LoginForm2 } />
     </Route>
   </Router>
 );
@@ -44,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (window.currentUser) {
     SessionActions.receiveCurrentUser(window.currentUser);
   }
-
+  Modal.setAppElement(document.body);
   const root = document.getElementById('content');
   ReactDOM.render(appRouter, root);
 });
