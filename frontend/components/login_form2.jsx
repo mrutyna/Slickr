@@ -16,7 +16,7 @@ const LoginForm = React.createClass({
 
 	demoLoginHandler(e) {
 		e.preventDefault();
-		this.setState({ username: "", password: "", formType: "logIn"});
+		this.setState({ username: "", password: "", formType: "login"});
 		var _username = this.DEMO_USERNAME.split("").slice();
 		this.fillDemoUsername(_username);
 	},
@@ -49,8 +49,19 @@ const LoginForm = React.createClass({
 		 }, 120);
 	 } else {
 		 var e = { preventDefault: function() {} };
-		 this.handleSubmit(e);
+		 this.handleDemoSubmit(e);
 	 }
+ },
+
+ handleDemoSubmit(e) {
+	 e.preventDefault();
+
+	 const formData = {
+		 username: this.state.username,
+		 password: this.state.password
+	 };
+
+		SessionActions.logIn(formData);
  },
 
 	contextTypes: {
