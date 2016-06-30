@@ -1,3 +1,4 @@
+require 'bcrypt'
 class User < ActiveRecord::Base
 
 	attr_reader :password
@@ -8,6 +9,14 @@ class User < ActiveRecord::Base
 
 	after_initialize :ensure_session_token
 	before_validation :ensure_session_token_uniqueness
+
+		has_many :photos,
+			foreign_key: :user_id,
+			class_name: "Photo"
+
+		has_many :comments,
+			foreign_key: :user_id,
+			class_name: "Comment"
 
 	def password= password
 		self.password_digest = BCrypt::Password.create(password)
