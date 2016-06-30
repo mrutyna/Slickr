@@ -14,37 +14,12 @@ const App = React.createClass({
     SessionStore.addListener(this.forceUpdate.bind(this));
   },
 
-  _handleLogOut(){
-    SessionActions.logOut();
-  },
-
-  greeting() {
-    if (SessionStore.isUserLoggedIn()) {
-
-    	return (
-    		<hgroup className="header-group">
-    			<h2 className="header-name">Hi, {SessionStore.currentUser().username}!</h2>
-    			<input className="header-button" type="submit" value="logout" onClick={ this._handleLogOut } />
-    		</hgroup>
-    	);
-    } else if ( !["/login", "/signup"].includes(this.props.location.pathname) ) {
-      return (
-        <nav className="login-signup">
-          <Link to="/login" activeClassName="current">Login</Link>
-          &nbsp;or&nbsp;
-          <Link to="/signup" activeClassName="current">Sign up!</Link>
-        </nav>
-      );
-    }
-  },
-
   render() {
     return (
       <div>
         <NavBar />
         <header>
-          <Link to="/" className="header-link"><h1>Cap Stone</h1></Link>
-          { this.greeting() }
+          <Link to="/" className="header-link"><h1>Sir Capstone, III</h1></Link>
         </header>
         {this.props.children}
       </div>
