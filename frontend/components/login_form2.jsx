@@ -10,6 +10,49 @@ const Modal = require("react-modal");
 
 const LoginForm = React.createClass({
 
+	DEMO_USERNAME: "demo",
+
+	DEMO_PASSWORD: "asdfasdf",
+
+	demoLoginHandler(e) {
+		e.preventDefault();
+		this.setState({ username: "", password: "", formType: "logIn"});
+		var _username = this.DEMO_USERNAME.split("").slice();
+		this.fillDemoUsername(_username);
+	},
+
+	fillDemoUsername: function(_username) {
+	 var self = this;
+	 if (_username.length > 0) {
+		 setTimeout(function() {
+			 self.setState({
+				 username: self.state.username + _username.shift()
+			 });
+
+			 self.fillDemoUsername(_username);
+		 }, 120);
+	 } else {
+		 var _password = this.DEMO_PASSWORD.split("").slice();
+		 this.fillDemoPassword(_password);
+	 }
+ },
+
+ fillDemoPassword: function(_password) {
+	 var self = this;
+	 if (_password.length > 0) {
+		 setTimeout(function() {
+			 self.setState({
+				 password: self.state.password + _password.shift()
+			 });
+
+			 self.fillDemoPassword(_password);
+		 }, 120);
+	 } else {
+		 var e = { preventDefault: function() {} };
+		 this.handleSubmit(e);
+	 }
+ },
+
 	contextTypes: {
 		router: React.PropTypes.object.isRequired
 	},
@@ -120,6 +163,9 @@ const LoginForm = React.createClass({
 		        <br />
 						<input type="submit" value="Submit" />
 					</div>
+					<div id="demo-login-btn" className="modal-submit-btn"	onClick={this.demoLoginHandler}>
+						Demo Login
+				 </div>
 				</form>
 			</div>
 		</Modal>
