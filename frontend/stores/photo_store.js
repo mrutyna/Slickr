@@ -24,7 +24,6 @@ function resetAllPhotos(photos) {
 }
 
 function resetSinglePhoto(photo) {
-  console.log("o fuk yeeee");
   _photos[photo.id] = photo;
   PhotoStore.__emitChange();
 }

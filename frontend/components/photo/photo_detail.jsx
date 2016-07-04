@@ -52,8 +52,6 @@ const PhotoDetail = React.createClass({
   },
 
   onReceivedPhoto () {
-    console.log(PhotoStore.find(this.props.params.id));
-
     this.setState({
       photo: PhotoStore.find(this.props.params.id)
     });
@@ -67,8 +65,6 @@ const PhotoDetail = React.createClass({
   },
 
   handleExit() {
-    console.log("handled the best exit");
-
     let newPhoto = this.state.photo;
     newPhoto.description = this.state.photo.description;
     PhotoActions.editPhoto(newPhoto);
