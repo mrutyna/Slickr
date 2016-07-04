@@ -59,6 +59,21 @@ const PhotoDetail = React.createClass({
     });
   },
 
+  onChange(e) {
+    let newPhoto = this.state.photo;
+    newPhoto.description = e.currentTarget.value;
+
+    this.setState({photo: newPhoto});
+  },
+
+  handleExit() {
+    console.log("handled the best exit");
+
+    let newPhoto = this.state.photo;
+    newPhoto.description = this.state.photo.description;
+    PhotoActions.editPhoto(newPhoto);
+  },
+
   render () {
     let photo = this.state.photo;
     //
@@ -69,8 +84,13 @@ const PhotoDetail = React.createClass({
     // let className = (!empty ? "photo-detail-container" : "hidden");
 
     return (
-      <div className={"thank-fuck"}>
-        <h1>{photo.title}</h1>
+      <div className={"photo-detail"}>
+        <h1 className={"photo-detail-title"}>{photo.title}</h1>
+        <textarea className={"photo-detail-textarea"}
+                  onChange={this.onChange}
+                  onBlur={this.handleExit}
+                  value={this.state.photo.description}/>
+        <img  className={"photo-detail-img"} src={photo.photo_url}/>
       </div>
     );
   }
