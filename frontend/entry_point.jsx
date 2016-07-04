@@ -18,12 +18,14 @@ const SessionActions = require('./actions/session_actions');
 
 const Modal = require("react-modal");
 
+const PhotoIndex = require('./components/photo/photo_index.jsx');
 
 const appRouter = (
   <Router history={ hashHistory }>
     <Route path="/" component={ App } >
       <Route path="/login" component={ LoginForm2 } />
       <Route path="/signup" component={ LoginForm2 } />
+      <Route path="/photos" component={ PhotoIndex } />
     </Route>
   </Router>
 );

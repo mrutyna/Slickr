@@ -8,3 +8,4 @@
 
 User.create({username: "demo", password: "asdfasdf"})
 Photo.create({title:"Motivation Penguin", description:"You can do it!!!", user_id: 1, photo_url:"http://i.imgur.com/G7UWo.gif"})
+Photo.create({title:"Shaq And Dat Puzi", description:"noice", user_id: 1, photo_url:"https://cdn2.vox-cdn.com/thumbor/XjfWvizyYYXbALK9tTW8mzLJMMs=/1x0:369x207/1600x900/cdn0.vox-cdn.com/uploads/chorus_image/image/32606283/q3e87zR.0.gif"})
