@@ -42,7 +42,7 @@ const PhotoIndexItem = React.createClass({
   render() {
     return (
       <li className="photo-item" onClick={this.handleClick}>
-        <div className="photo-url-index-item"><img  src={this.props.photo.photo_url}/></div>
+        <div onClick={this.handleClick} className="photo-url-index-item"><img  src={this.props.photo.photo_url}/></div>
       </li>
     );
   }

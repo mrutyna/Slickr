@@ -4,7 +4,7 @@ const React = require('react');
 // const PhotoForm = require('./photo_form');
 const IndexItem = require('./photo_index_item');
 
-// const PhotoDetail = require('./photo_detail');
+const PhotoDetail = require('./photo_detail');
 const PhotoStore = require('../../stores/photo_store');
 const PhotoActions = require('../../actions/photo_actions');
 

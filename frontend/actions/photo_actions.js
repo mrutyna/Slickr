@@ -20,7 +20,7 @@ const PhotoActions = {
   },
 
   fetchPhoto (id) {
-    PhotoApiUtil.fetchPhoto(id, PhotoActions.receivePhoto);
+    PhotoApiUtil.fetchPhoto(id, PhotoActions.receiveSinglePhoto);
   },
 
   createPhoto (photo) {
