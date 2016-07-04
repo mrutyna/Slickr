@@ -7,3 +7,4 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 User.create({username: "demo", password: "asdfasdf"})
+Photo.create({title:"Motivation Penguin", description:"You can do it!!!", user_id: 1, photo_url:"http://i.imgur.com/G7UWo.gif"})
