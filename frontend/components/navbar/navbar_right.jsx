@@ -2,7 +2,7 @@ const React = require('react');
 const Link = require('react-router').Link;
 const SessionActions = require('../../actions/session_actions');
 const PhotoActions = require('../../actions/photo_actions.js');
-
+const hashHistory = require('react-router').hashHistory;
 const SessionStore = require('../../stores/session_store');
 
 const NavBarRight = React.createClass({
@@ -18,8 +18,8 @@ const NavBarRight = React.createClass({
                           description: description,
                           photo_url: photo_url,
                           user_id: SessionStore.currentUser().id};
-              console.log(photo);
               PhotoActions.createPhoto(photo);
+              hashHistory.push("photos/");
             };
             });
   },
