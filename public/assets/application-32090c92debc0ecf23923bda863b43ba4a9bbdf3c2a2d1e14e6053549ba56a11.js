@@ -47220,11 +47220,20 @@ return jQuery;
 	    this.listener.remove();
 	  },
 	  onReceivedPhoto: function onReceivedPhoto() {
-	    console.log(PhotoStore.find(this.props.params.id));
-	
 	    this.setState({
 	      photo: PhotoStore.find(this.props.params.id)
 	    });
+	  },
+	  onChange: function onChange(e) {
+	    var newPhoto = this.state.photo;
+	    newPhoto.description = e.currentTarget.value;
+	
+	    this.setState({ photo: newPhoto });
+	  },
+	  handleExit: function handleExit() {
+	    var newPhoto = this.state.photo;
+	    newPhoto.description = this.state.photo.description;
+	    PhotoActions.editPhoto(newPhoto);
 	  },
 	  render: function render() {
 	    var photo = this.state.photo;
@@ -47237,12 +47246,17 @@ return jQuery;
 	
 	    return React.createElement(
 	      'div',
-	      { className: "thank-fuck" },
+	      { className: "photo-detail" },
 	      React.createElement(
 	        'h1',
-	        null,
+	        { className: "photo-detail-title" },
 	        photo.title
-	      )
+	      ),
+	      React.createElement('textarea', { className: "photo-detail-textarea",
+	        onChange: this.onChange,
+	        onBlur: this.handleExit,
+	        value: this.state.photo.description }),
+	      React.createElement('img', { className: "photo-detail-img", src: photo.photo_url })
 	    );
 	  }
 	});
@@ -47279,7 +47293,6 @@ return jQuery;
 	}
 	
 	function resetSinglePhoto(photo) {
-	  console.log("o fuk yeeee");
 	  _photos[photo.id] = photo;
 	  PhotoStore.__emitChange();
 	}
