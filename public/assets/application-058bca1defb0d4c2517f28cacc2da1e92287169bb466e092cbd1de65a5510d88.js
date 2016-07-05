@@ -44595,11 +44595,29 @@ return jQuery;
 	var React = __webpack_require__(1);
 	var Link = __webpack_require__(168).Link;
 	var SessionActions = __webpack_require__(254);
-	
+	var PhotoActions = __webpack_require__(284);
+	var hashHistory = __webpack_require__(168).hashHistory;
 	var SessionStore = __webpack_require__(231);
 	
 	var NavBarRight = React.createClass({
 	  displayName: 'NavBarRight',
+	  uploadImage: function uploadImage() {
+	    cloudinary.openUploadWidget({ cloud_name: 'mrcapstone', upload_preset: 'gvnvjyr9' }, function (error, result) {
+	      if (error) {
+	        console.log(error);
+	      } else {
+	        var photo_url = result[0].secure_url;
+	        var title = prompt('What is the title of this picture ?');
+	        var description = prompt('What is the description of this picture ?');
+	        var photo = { title: title,
+	          description: description,
+	          photo_url: photo_url,
+	          user_id: SessionStore.currentUser().id };
+	        PhotoActions.createPhoto(photo);
+	        hashHistory.push("photos/");
+	      };
+	    });
+	  },
 	  render: function render() {
 	
 	    if (SessionStore.isUserLoggedIn()) {
@@ -44614,7 +44632,12 @@ return jQuery;
 	          SessionStore.currentUser().username,
 	          '!'
 	        ),
-	        React.createElement('input', { className: 'header-button', type: 'submit', value: 'logout', onClick: SessionActions.logOut })
+	        React.createElement('input', { className: 'header-button', type: 'submit', value: 'logout', onClick: SessionActions.logOut }),
+	        React.createElement(
+	          'button',
+	          { onClick: this.uploadImage },
+	          'Upload Image'
+	        )
 	      );
 	    } else {
 	
@@ -44734,7 +44757,7 @@ return jQuery;
 		},
 		redirectIfLoggedIn: function redirectIfLoggedIn() {
 			if (SessionStore.isUserLoggedIn()) {
-				this.context.router.push("/");
+				this.context.router.push("/photos");
 			}
 		},
 		handleSubmit: function handleSubmit(e) {
