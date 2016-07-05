@@ -8,7 +8,10 @@ const SessionStore = require('../../stores/session_store');
 const NavBarRight = React.createClass({
 
   uploadImage() {
-    cloudinary.openUploadWidget({ cloud_name: 'mrcapstone', upload_preset: 'gvnvjyr9'},
+    cloudinary.openUploadWidget({ cloud_name: 'mrcapstone',
+                                  upload_preset: 'gvnvjyr9',
+                                  theme: "minimal"
+                                  },
             function(error, result) {
               if (error) { console.log(error); } else {
               let photo_url = result[0].secure_url;
