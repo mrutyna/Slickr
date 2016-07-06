@@ -43,7 +43,18 @@ module.exports =  {
         cb(updatedPhoto, redirectCb);
       }
     });
+  },
+  createComment (newComment, cb, redirectCb) {
+    $.ajax({
+      url: "api/comments",
+      method: "POST",
+      data: {comment: newComment},
+      success: function (comment) {
+        cb(comment, redirectCb);
+      }
+    });
   }
+
   // ,
   //
   // createComment: function(comment) {

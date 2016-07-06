@@ -27,6 +27,10 @@ const PhotoActions = {
     PhotoApiUtil.createPhoto(photo, PhotoActions.receiveSinglePhoto);
   },
 
+  createComment (comment) {
+    PhotoApiUtil.createComment(comment, PhotoActions.receiveSingleComment);
+  },
+
   deletePhoto(id) {
     PhotoApiUtil.deletePhoto(id, PhotoActions.removePhoto);
   },
@@ -60,6 +64,13 @@ const PhotoActions = {
     AppDispatcher.dispatch({
       actionType: PhotoConstants.PHOTO_RECEIVED,
       photo: photo
+    });
+  },
+
+  receiveSingleComment (comment) {
+    AppDispatcher.dispatch({
+      actionType: PhotoConstants.COMMENT_RECEIVED,
+      comment: comment
     });
   }
 };

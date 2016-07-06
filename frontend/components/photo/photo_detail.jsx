@@ -4,6 +4,8 @@ const React = require('react');
 const PhotoActions = require('../../actions/photo_actions');
 const PhotoStore = require('../../stores/photo_store');
 
+const CommentForm = require('../comment/comment_form');
+
 const PhotoDetail = React.createClass({
   setTargetPhoto (newProps) {
     if(this.id === undefined) {
@@ -56,6 +58,7 @@ const PhotoDetail = React.createClass({
     this.setState({
       photo: PhotoStore.find(this.props.params.id)
     });
+    console.log(this.state);
   },
 
   onChange(e) {
@@ -73,7 +76,6 @@ const PhotoDetail = React.createClass({
 
   render () {
     let photo = this.state.photo;
-    console.log(photo);
     //
     // let photoCheck = PhotoStore.find(this.id);
     //
@@ -96,6 +98,7 @@ const PhotoDetail = React.createClass({
               );
             })
           }
+          <CommentForm className="comment-form" photoId={photo.id} />
       </div>
     );
   }

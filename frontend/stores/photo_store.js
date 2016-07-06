@@ -28,6 +28,10 @@ function resetSinglePhoto(photo) {
   PhotoStore.__emitChange();
 }
 
+function resetSingleComment(comment) {
+  PhotoStore.__emitChange();
+}
+
 function removePhoto(id) {
   delete _photos[id];
 
@@ -41,6 +45,9 @@ PhotoStore.__onDispatch = function(payload) {
       break;
     case PhotoConstants.PHOTO_RECEIVED:
       resetSinglePhoto(payload.photo);
+      break;
+    case PhotoConstants.COMMENT_RECEIVED:
+      resetSingleComment(payload.comment);
       break;
     case PhotoConstants.PHOTO_REMOVED:
       removePhoto(payload.id);
