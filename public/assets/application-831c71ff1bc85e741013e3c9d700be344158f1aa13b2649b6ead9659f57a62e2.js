@@ -11641,14 +11641,14 @@ return jQuery;
 	var hashHistory = ReactRouter.hashHistory;
 	//Components
 	var App = __webpack_require__(230);
-	var LoginForm2 = __webpack_require__(260);
+	var LoginForm2 = __webpack_require__(263);
 	//Auth
 	var SessionStore = __webpack_require__(231);
 	var SessionActions = __webpack_require__(254);
 	
-	var Modal = __webpack_require__(262);
+	var Modal = __webpack_require__(265);
 	
-	var PhotoIndex = __webpack_require__(282);
+	var PhotoIndex = __webpack_require__(285);
 	var PhotoDetail = __webpack_require__(287);
 	
 	var appRouter = React.createElement(
@@ -37582,7 +37582,7 @@ return jQuery;
 	        null,
 	        React.createElement(
 	          Link,
-	          { to: '/', className: 'header-link' },
+	          { to: '/photos', className: 'header-link' },
 	          React.createElement(
 	            'h1',
 	            null,
@@ -44595,14 +44595,17 @@ return jQuery;
 	var React = __webpack_require__(1);
 	var Link = __webpack_require__(168).Link;
 	var SessionActions = __webpack_require__(254);
-	var PhotoActions = __webpack_require__(284);
+	var PhotoActions = __webpack_require__(260);
 	var hashHistory = __webpack_require__(168).hashHistory;
 	var SessionStore = __webpack_require__(231);
 	
 	var NavBarRight = React.createClass({
 	  displayName: 'NavBarRight',
 	  uploadImage: function uploadImage() {
-	    cloudinary.openUploadWidget({ cloud_name: 'mrcapstone', upload_preset: 'gvnvjyr9' }, function (error, result) {
+	    cloudinary.openUploadWidget({ cloud_name: 'mrcapstone',
+	      upload_preset: 'gvnvjyr9',
+	      theme: "minimal"
+	    }, function (error, result) {
 	      if (error) {
 	        console.log(error);
 	      } else {
@@ -44667,15 +44670,193 @@ return jQuery;
 
 	"use strict";
 	
+	var AppDispatcher = __webpack_require__(232);
+	var PhotoConstants = __webpack_require__(261);
+	var PhotoApiUtil = __webpack_require__(262);
+	
+	var PhotoActions = {
+	  // fetchAllPhotos (filters) {
+	  //   PhotoApiUtil.fetchAllPhotos(filters, PhotoActions.receiveAllPhotos);
+	  // },
+	  // fetchPhoto (filters) {
+	  //   PhotoApiUtil.fetchPhotos(filters, PhotoActions.receiveAllPhotos);
+	  // },
+	  // createPhoto (photo) {
+	  //   PhotoApiUtil.createPhoto(photo, PhotoActions.receiveSinglePhoto);
+	  // },
+	
+	  fetchAllPhotos: function fetchAllPhotos() {
+	    PhotoApiUtil.fetchAllPhotos(PhotoActions.receiveAllPhotos);
+	  },
+	  fetchPhoto: function fetchPhoto(id) {
+	    PhotoApiUtil.fetchPhoto(id, PhotoActions.receiveSinglePhoto);
+	  },
+	  createPhoto: function createPhoto(photo) {
+	    PhotoApiUtil.createPhoto(photo, PhotoActions.receiveSinglePhoto);
+	  },
+	  createComment: function createComment(comment) {
+	    PhotoApiUtil.createComment(comment, PhotoActions.receiveSingleComment);
+	  },
+	  deletePhoto: function deletePhoto(id) {
+	    PhotoApiUtil.deletePhoto(id, PhotoActions.removePhoto);
+	  },
+	  editPhoto: function editPhoto(photo) {
+	    PhotoApiUtil.updatePhoto(photo, PhotoActions.updatePhoto);
+	  },
+	  removePhoto: function removePhoto(id) {
+	    AppDispatcher.dispatch({
+	      actionType: PhotoConstants.PHOTO_REMOVED,
+	      id: id
+	    });
+	  },
+	  updatePhoto: function updatePhoto(photo) {
+	    AppDispatcher.dispatch({
+	      actionType: PhotoConstants.PHOTO_RECEIVED,
+	      photo: photo
+	    });
+	  },
+	  receiveAllPhotos: function receiveAllPhotos(photos) {
+	    AppDispatcher.dispatch({
+	      actionType: PhotoConstants.PHOTOS_RECEIVED,
+	      photos: photos
+	    });
+	  },
+	  receiveSinglePhoto: function receiveSinglePhoto(photo) {
+	    AppDispatcher.dispatch({
+	      actionType: PhotoConstants.PHOTO_RECEIVED,
+	      photo: photo
+	    });
+	  },
+	  receiveSingleComment: function receiveSingleComment(comment) {
+	    AppDispatcher.dispatch({
+	      actionType: PhotoConstants.COMMENT_RECEIVED,
+	      comment: comment
+	    });
+	  }
+	};
+	
+	module.exports = PhotoActions;
+
+/***/ },
+/* 261 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = {
+	  PHOTO_RECEIVED: "PHOTO_RECEIVED",
+	  PHOTOS_RECEIVED: "PHOTOS_RECEIVED",
+	  PHOTO_REMOVED: "PHOTO_REMOVED",
+	  ERRORS_RECEIVED: "ERRORS_RECEIVED",
+	  COMMENT_RECEIVED: "COMMENT_RECEIVED"
+	};
+
+/***/ },
+/* 262 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = {
+	  fetchAllPhotos: function fetchAllPhotos(cb) {
+	    $.ajax({
+	      url: "api/photos",
+	      success: cb
+	    });
+	  },
+	  fetchPhoto: function fetchPhoto(id, cb) {
+	    $.ajax({
+	      url: "api/photos/" + id,
+	      success: cb
+	    });
+	  },
+	  deletePhoto: function deletePhoto(id, cb) {
+	    $.ajax({
+	      url: "api/photos/" + id,
+	      method: "DELETE",
+	      success: cb(id)
+	    });
+	  },
+	  createPhoto: function createPhoto(newPhoto, cb, redirectCb) {
+	    $.ajax({
+	      url: "api/photos",
+	      method: "POST",
+	      data: { photo: newPhoto },
+	      success: function success(photo) {
+	        cb(photo, redirectCb);
+	      }
+	    });
+	  },
+	  updatePhoto: function updatePhoto(photo, cb, redirectCb) {
+	    $.ajax({
+	      url: "api/photos/" + photo.id,
+	      method: "PATCH",
+	      data: { photo: photo },
+	      success: function success(updatedPhoto) {
+	        cb(updatedPhoto, redirectCb);
+	      }
+	    });
+	  },
+	  createComment: function createComment(newComment, cb, redirectCb) {
+	    $.ajax({
+	      url: "api/comments",
+	      method: "POST",
+	      data: { comment: newComment },
+	      success: function success(comment) {
+	        cb(comment, redirectCb);
+	      }
+	    });
+	  }
+	
+	  // ,
+	  //
+	  // createComment: function(comment) {
+	  //   $.ajax({
+	  //     type: 'POST',
+	  //     url: 'api/comments',
+	  //     data: {comment: {
+	  //       body: comment.body,
+	  //       x_pos: comment.xPos,
+	  //       y_pos: comment.yPos,
+	  //       design_id: comment.designId,
+	  //       user_id: comment.userId
+	  //     }},
+	  //     success: function(design) {
+	  //       DesignActions.receiveDesign(design);
+	  //     },
+	  //     error: function(errors) {
+	  //       DesignActions.receiveErrors(errors);
+	  //     }
+	  //   });
+	  // },
+	  //
+	  // deleteComment: function(commentId) {
+	  //   $.ajax({
+	  //     type: 'DELETE',
+	  //     url: 'api/comments' + commentId.toString(),
+	  //     success: function(design) {
+	  //       DesignActions.receiveDesign(design);
+	  //     }
+	  //   });
+	  // }
+	
+	};
+
+/***/ },
+/* 263 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
 	var React = __webpack_require__(1);
 	var Link = __webpack_require__(168).Link;
 	var SessionActions = __webpack_require__(254);
 	var SessionStore = __webpack_require__(231);
-	var ErrorStore = __webpack_require__(261);
+	var ErrorStore = __webpack_require__(264);
 	
-	var Modal = __webpack_require__(262);
+	var Modal = __webpack_require__(265);
 	
 	var LoginForm = React.createClass({
 		displayName: 'LoginForm',
@@ -44893,7 +45074,7 @@ return jQuery;
 	module.exports = LoginForm;
 
 /***/ },
-/* 261 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -44951,25 +45132,25 @@ return jQuery;
 	module.exports = ErrorStore;
 
 /***/ },
-/* 262 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(263);
+	module.exports = __webpack_require__(266);
 	
 
 
 /***/ },
-/* 263 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(38);
-	var ExecutionEnvironment = __webpack_require__(264);
-	var ModalPortal = React.createFactory(__webpack_require__(265));
-	var ariaAppHider = __webpack_require__(280);
-	var elementClass = __webpack_require__(281);
+	var ExecutionEnvironment = __webpack_require__(267);
+	var ModalPortal = React.createFactory(__webpack_require__(268));
+	var ariaAppHider = __webpack_require__(283);
+	var elementClass = __webpack_require__(284);
 	var renderSubtreeIntoContainer = __webpack_require__(38).unstable_renderSubtreeIntoContainer;
-	var Assign = __webpack_require__(269);
+	var Assign = __webpack_require__(272);
 	
 	var SafeHTMLElement = ExecutionEnvironment.canUseDOM ? window.HTMLElement : {};
 	var AppElement = ExecutionEnvironment.canUseDOM ? document.body : {appendChild: function() {}};
@@ -45077,7 +45258,7 @@ return jQuery;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 264 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -45122,14 +45303,14 @@ return jQuery;
 
 
 /***/ },
-/* 265 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var div = React.DOM.div;
-	var focusManager = __webpack_require__(266);
-	var scopeTab = __webpack_require__(268);
-	var Assign = __webpack_require__(269);
+	var focusManager = __webpack_require__(269);
+	var scopeTab = __webpack_require__(271);
+	var Assign = __webpack_require__(272);
 	
 	// so that our CSS is statically analyzable
 	var CLASS_NAMES = {
@@ -45314,10 +45495,10 @@ return jQuery;
 
 
 /***/ },
-/* 266 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var findTabbable = __webpack_require__(267);
+	var findTabbable = __webpack_require__(270);
 	var modalElement = null;
 	var focusLaterElement = null;
 	var needToFocus = false;
@@ -45388,7 +45569,7 @@ return jQuery;
 
 
 /***/ },
-/* 267 */
+/* 270 */
 /***/ function(module, exports) {
 
 	/*!
@@ -45444,10 +45625,10 @@ return jQuery;
 
 
 /***/ },
-/* 268 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var findTabbable = __webpack_require__(267);
+	var findTabbable = __webpack_require__(270);
 	
 	module.exports = function(node, event) {
 	  var tabbable = findTabbable(node);
@@ -45469,7 +45650,7 @@ return jQuery;
 
 
 /***/ },
-/* 269 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45480,9 +45661,9 @@ return jQuery;
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var baseAssign = __webpack_require__(270),
-	    createAssigner = __webpack_require__(276),
-	    keys = __webpack_require__(272);
+	var baseAssign = __webpack_require__(273),
+	    createAssigner = __webpack_require__(279),
+	    keys = __webpack_require__(275);
 	
 	/**
 	 * A specialized version of `_.assign` for customizing assigned values without
@@ -45555,7 +45736,7 @@ return jQuery;
 
 
 /***/ },
-/* 270 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45566,8 +45747,8 @@ return jQuery;
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var baseCopy = __webpack_require__(271),
-	    keys = __webpack_require__(272);
+	var baseCopy = __webpack_require__(274),
+	    keys = __webpack_require__(275);
 	
 	/**
 	 * The base implementation of `_.assign` without support for argument juggling,
@@ -45588,7 +45769,7 @@ return jQuery;
 
 
 /***/ },
-/* 271 */
+/* 274 */
 /***/ function(module, exports) {
 
 	/**
@@ -45626,7 +45807,7 @@ return jQuery;
 
 
 /***/ },
-/* 272 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45637,9 +45818,9 @@ return jQuery;
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var getNative = __webpack_require__(273),
-	    isArguments = __webpack_require__(274),
-	    isArray = __webpack_require__(275);
+	var getNative = __webpack_require__(276),
+	    isArguments = __webpack_require__(277),
+	    isArray = __webpack_require__(278);
 	
 	/** Used to detect unsigned integer values. */
 	var reIsUint = /^\d+$/;
@@ -45868,7 +46049,7 @@ return jQuery;
 
 
 /***/ },
-/* 273 */
+/* 276 */
 /***/ function(module, exports) {
 
 	/**
@@ -46011,7 +46192,7 @@ return jQuery;
 
 
 /***/ },
-/* 274 */
+/* 277 */
 /***/ function(module, exports) {
 
 	/**
@@ -46260,7 +46441,7 @@ return jQuery;
 
 
 /***/ },
-/* 275 */
+/* 278 */
 /***/ function(module, exports) {
 
 	/**
@@ -46446,7 +46627,7 @@ return jQuery;
 
 
 /***/ },
-/* 276 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -46457,9 +46638,9 @@ return jQuery;
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var bindCallback = __webpack_require__(277),
-	    isIterateeCall = __webpack_require__(278),
-	    restParam = __webpack_require__(279);
+	var bindCallback = __webpack_require__(280),
+	    isIterateeCall = __webpack_require__(281),
+	    restParam = __webpack_require__(282);
 	
 	/**
 	 * Creates a function that assigns properties of source object(s) to a given
@@ -46504,7 +46685,7 @@ return jQuery;
 
 
 /***/ },
-/* 277 */
+/* 280 */
 /***/ function(module, exports) {
 
 	/**
@@ -46575,7 +46756,7 @@ return jQuery;
 
 
 /***/ },
-/* 278 */
+/* 281 */
 /***/ function(module, exports) {
 
 	/**
@@ -46713,7 +46894,7 @@ return jQuery;
 
 
 /***/ },
-/* 279 */
+/* 282 */
 /***/ function(module, exports) {
 
 	/**
@@ -46786,7 +46967,7 @@ return jQuery;
 
 
 /***/ },
-/* 280 */
+/* 283 */
 /***/ function(module, exports) {
 
 	var _element = typeof document !== 'undefined' ? document.body : null;
@@ -46834,7 +47015,7 @@ return jQuery;
 
 
 /***/ },
-/* 281 */
+/* 284 */
 /***/ function(module, exports) {
 
 	module.exports = function(opts) {
@@ -46899,18 +47080,18 @@ return jQuery;
 
 
 /***/ },
-/* 282 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	var React = __webpack_require__(1);
 	// const PhotoForm = require('./photo_form');
-	var IndexItem = __webpack_require__(283);
+	var IndexItem = __webpack_require__(286);
 	
 	var PhotoDetail = __webpack_require__(287);
 	var PhotoStore = __webpack_require__(288);
-	var PhotoActions = __webpack_require__(284);
+	var PhotoActions = __webpack_require__(260);
 	
 	var PhotoIndex = React.createClass({
 	  displayName: 'PhotoIndex',
@@ -46959,14 +47140,14 @@ return jQuery;
 	module.exports = PhotoIndex;
 
 /***/ },
-/* 283 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	var React = __webpack_require__(1);
 	var hashHistory = __webpack_require__(168).hashHistory;
-	var PhotoActions = __webpack_require__(284);
+	var PhotoActions = __webpack_require__(260);
 	
 	var PhotoIndexItem = React.createClass({
 	  displayName: 'PhotoIndexItem',
@@ -47033,171 +47214,17 @@ return jQuery;
 	module.exports = PhotoIndexItem;
 
 /***/ },
-/* 284 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var AppDispatcher = __webpack_require__(232);
-	var PhotoConstants = __webpack_require__(285);
-	var PhotoApiUtil = __webpack_require__(286);
-	
-	var PhotoActions = {
-	  // fetchAllPhotos (filters) {
-	  //   PhotoApiUtil.fetchAllPhotos(filters, PhotoActions.receiveAllPhotos);
-	  // },
-	  // fetchPhoto (filters) {
-	  //   PhotoApiUtil.fetchPhotos(filters, PhotoActions.receiveAllPhotos);
-	  // },
-	  // createPhoto (photo) {
-	  //   PhotoApiUtil.createPhoto(photo, PhotoActions.receiveSinglePhoto);
-	  // },
-	
-	  fetchAllPhotos: function fetchAllPhotos() {
-	    PhotoApiUtil.fetchAllPhotos(PhotoActions.receiveAllPhotos);
-	  },
-	  fetchPhoto: function fetchPhoto(id) {
-	    PhotoApiUtil.fetchPhoto(id, PhotoActions.receiveSinglePhoto);
-	  },
-	  createPhoto: function createPhoto(photo) {
-	    PhotoApiUtil.createPhoto(photo, PhotoActions.receiveSinglePhoto);
-	  },
-	  deletePhoto: function deletePhoto(id) {
-	    PhotoApiUtil.deletePhoto(id, PhotoActions.removePhoto);
-	  },
-	  editPhoto: function editPhoto(photo) {
-	    PhotoApiUtil.updatePhoto(photo, PhotoActions.updatePhoto);
-	  },
-	  removePhoto: function removePhoto(id) {
-	    AppDispatcher.dispatch({
-	      actionType: PhotoConstants.PHOTO_REMOVED,
-	      id: id
-	    });
-	  },
-	  updatePhoto: function updatePhoto(photo) {
-	    AppDispatcher.dispatch({
-	      actionType: PhotoConstants.PHOTO_RECEIVED,
-	      photo: photo
-	    });
-	  },
-	  receiveAllPhotos: function receiveAllPhotos(photos) {
-	    AppDispatcher.dispatch({
-	      actionType: PhotoConstants.PHOTOS_RECEIVED,
-	      photos: photos
-	    });
-	  },
-	  receiveSinglePhoto: function receiveSinglePhoto(photo) {
-	    AppDispatcher.dispatch({
-	      actionType: PhotoConstants.PHOTO_RECEIVED,
-	      photo: photo
-	    });
-	  }
-	};
-	
-	module.exports = PhotoActions;
-
-/***/ },
-/* 285 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	module.exports = {
-	  PHOTO_RECEIVED: "PHOTO_RECEIVED",
-	  PHOTOS_RECEIVED: "PHOTOS_RECEIVED",
-	  PHOTO_REMOVED: "PHOTO_REMOVED",
-	  ERRORS_RECEIVED: "ERRORS_RECEIVED"
-	};
-
-/***/ },
-/* 286 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	module.exports = {
-	  fetchAllPhotos: function fetchAllPhotos(cb) {
-	    $.ajax({
-	      url: "api/photos",
-	      success: cb
-	    });
-	  },
-	  fetchPhoto: function fetchPhoto(id, cb) {
-	    $.ajax({
-	      url: "api/photos/" + id,
-	      success: cb
-	    });
-	  },
-	  deletePhoto: function deletePhoto(id, cb) {
-	    $.ajax({
-	      url: "api/photos/" + id,
-	      method: "DELETE",
-	      success: cb(id)
-	    });
-	  },
-	  createPhoto: function createPhoto(newPhoto, cb, redirectCb) {
-	    $.ajax({
-	      url: "api/photos",
-	      method: "POST",
-	      data: { photo: newPhoto },
-	      success: function success(photo) {
-	        cb(photo, redirectCb);
-	      }
-	    });
-	  },
-	  updatePhoto: function updatePhoto(photo, cb, redirectCb) {
-	    $.ajax({
-	      url: "api/photos/" + photo.id,
-	      method: "PATCH",
-	      data: { photo: photo },
-	      success: function success(updatedPhoto) {
-	        cb(updatedPhoto, redirectCb);
-	      }
-	    });
-	  }
-	  // ,
-	  //
-	  // createComment: function(comment) {
-	  //   $.ajax({
-	  //     type: 'POST',
-	  //     url: 'api/comments',
-	  //     data: {comment: {
-	  //       body: comment.body,
-	  //       x_pos: comment.xPos,
-	  //       y_pos: comment.yPos,
-	  //       design_id: comment.designId,
-	  //       user_id: comment.userId
-	  //     }},
-	  //     success: function(design) {
-	  //       DesignActions.receiveDesign(design);
-	  //     },
-	  //     error: function(errors) {
-	  //       DesignActions.receiveErrors(errors);
-	  //     }
-	  //   });
-	  // },
-	  //
-	  // deleteComment: function(commentId) {
-	  //   $.ajax({
-	  //     type: 'DELETE',
-	  //     url: 'api/comments' + commentId.toString(),
-	  //     success: function(design) {
-	  //       DesignActions.receiveDesign(design);
-	  //     }
-	  //   });
-	  // }
-	
-	};
-
-/***/ },
 /* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	var React = __webpack_require__(1);
-	var PhotoActions = __webpack_require__(284);
+	var PhotoActions = __webpack_require__(260);
 	var PhotoStore = __webpack_require__(288);
+	var hashHistory = __webpack_require__(168).hashHistory;
+	
+	var CommentForm = __webpack_require__(289);
 	
 	var PhotoDetail = React.createClass({
 	  displayName: 'PhotoDetail',
@@ -47228,7 +47255,8 @@ return jQuery;
 	      photo: {
 	        id: undefined,
 	        title: "Photo Title",
-	        description: "Photo Description"
+	        description: "Photo Description",
+	        comments: []
 	      }
 	    };
 	  },
@@ -47246,6 +47274,7 @@ return jQuery;
 	    this.setState({
 	      photo: PhotoStore.find(this.props.params.id)
 	    });
+	    console.log(this.state);
 	  },
 	  onChange: function onChange(e) {
 	    var newPhoto = this.state.photo;
@@ -47275,11 +47304,26 @@ return jQuery;
 	        { className: "photo-detail-title" },
 	        photo.title
 	      ),
+	      React.createElement(
+	        'button',
+	        { className: 'back-button', onClick: function onClick() {
+	            return hashHistory.push("photos");
+	          } },
+	        'Back to All Photos'
+	      ),
 	      React.createElement('textarea', { className: "photo-detail-textarea",
 	        onChange: this.onChange,
 	        onBlur: this.handleExit,
 	        value: this.state.photo.description }),
-	      React.createElement('img', { className: "photo-detail-img", src: photo.photo_url })
+	      React.createElement('img', { className: "photo-detail-img", src: photo.photo_url }),
+	      photo.comments.map(function (comment) {
+	        return React.createElement(
+	          'li',
+	          { className: 'comment-item', key: comment.id },
+	          comment.body
+	        );
+	      }),
+	      React.createElement(CommentForm, { className: 'comment-form', photoId: photo.id })
 	    );
 	  }
 	});
@@ -47293,7 +47337,7 @@ return jQuery;
 	"use strict";
 	
 	var Store = __webpack_require__(236).Store;
-	var PhotoConstants = __webpack_require__(285);
+	var PhotoConstants = __webpack_require__(261);
 	var AppDispatcher = __webpack_require__(232);
 	var PhotoStore = new Store(AppDispatcher);
 	
@@ -47320,6 +47364,10 @@ return jQuery;
 	  PhotoStore.__emitChange();
 	}
 	
+	function resetSingleComment(comment) {
+	  PhotoStore.__emitChange();
+	}
+	
 	function removePhoto(id) {
 	  delete _photos[id];
 	
@@ -47334,6 +47382,9 @@ return jQuery;
 	    case PhotoConstants.PHOTO_RECEIVED:
 	      resetSinglePhoto(payload.photo);
 	      break;
+	    case PhotoConstants.COMMENT_RECEIVED:
+	      resetSingleComment(payload.comment);
+	      break;
 	    case PhotoConstants.PHOTO_REMOVED:
 	      removePhoto(payload.id);
 	      break;
@@ -47341,6 +47392,80 @@ return jQuery;
 	};
 	
 	module.exports = PhotoStore;
+
+/***/ },
+/* 289 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(1);
+	var ReactDOM = __webpack_require__(38);
+	var HashHistory = __webpack_require__(168).hashHistory;
+	var PhotoActions = __webpack_require__(260);
+	var SessionStore = __webpack_require__(231);
+	
+	var CommentForm = React.createClass({
+	  displayName: "CommentForm",
+	
+	
+	  getInitialState: function getInitialState() {
+	    return { body: "", opacity: 0 };
+	  },
+	
+	  componentDidMount: function componentDidMount() {
+	    var self = this;
+	
+	    ReactDOM.findDOMNode(self.refs.autoFocus).focus();
+	
+	    this.setState({ opacity: 100 });
+	  },
+	
+	  bodyChange: function bodyChange(e) {
+	    e.preventDefault();
+	    this.setState({ body: e.target.value });
+	  },
+	
+	  submitHandler: function submitHandler(e) {
+	    e.preventDefault();
+	    PhotoActions.createComment({
+	      body: this.state.body,
+	      photo_id: this.props.photoId,
+	      user_id: SessionStore.currentUser().id
+	    });
+	    this.setState({ body: "" });
+	    PhotoActions.fetchPhoto(this.props.photoId);
+	  },
+	
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      { className: "comment-form-box", style: { opacity: this.state.opacity } },
+	      React.createElement(
+	        "div",
+	        { className: "comment-form" },
+	        React.createElement(
+	          "form",
+	          { className: "comment-form", onSubmit: this.submitHandler },
+	          React.createElement("textarea", {
+	            className: "comment-form-textarea",
+	            ref: "autoFocus",
+	            value: this.state.body,
+	            onChange: this.bodyChange,
+	            placeholder: "What's on your mind?"
+	          }),
+	          React.createElement(
+	            "div",
+	            { className: "comment-form-action-btns" },
+	            React.createElement("input", { type: "submit", className: "comment-form-submit-btn", value: "Comment" })
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = CommentForm;
 
 /***/ }
 /******/ ]);

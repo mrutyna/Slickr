@@ -3,6 +3,7 @@
 const React = require('react');
 const PhotoActions = require('../../actions/photo_actions');
 const PhotoStore = require('../../stores/photo_store');
+const hashHistory = require('react-router').hashHistory;
 
 const CommentForm = require('../comment/comment_form');
 
@@ -74,6 +75,8 @@ const PhotoDetail = React.createClass({
     PhotoActions.editPhoto(newPhoto);
   },
 
+
+
   render () {
     let photo = this.state.photo;
     //
@@ -86,6 +89,7 @@ const PhotoDetail = React.createClass({
     return (
       <div className={"photo-detail"}>
         <h1 className={"photo-detail-title"}>{photo.title}</h1>
+        <button className="back-button" onClick={() => hashHistory.push("photos")}>Back to All Photos</button>
         <textarea className={"photo-detail-textarea"}
                   onChange={this.onChange}
                   onBlur={this.handleExit}
