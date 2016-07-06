@@ -30,7 +30,7 @@ var CommentForm = React.createClass({
       photo_id: this.props.photoId,
       user_id: SessionStore.currentUser().id
     });
-
+    this.setState({body: ""});
     PhotoActions.fetchPhoto(this.props.photoId);
   },
 
@@ -47,7 +47,6 @@ var CommentForm = React.createClass({
               placeholder="What's on your mind?"
               ></textarea>
             <div className="comment-form-action-btns">
-              <div className="comment-form-cancel-btn" onClick={this.props.closeCommentForm}>Cancel</div>
               <input type="submit" className="comment-form-submit-btn" value="Comment"/>
             </div>
           </form>
