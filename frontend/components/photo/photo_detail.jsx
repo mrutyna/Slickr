@@ -33,7 +33,8 @@ const PhotoDetail = React.createClass({
       photo: {
         id: undefined,
         title: "Photo Title",
-        description: "Photo Description"
+        description: "Photo Description",
+        comments: []
       }
     };
   },
@@ -72,6 +73,7 @@ const PhotoDetail = React.createClass({
 
   render () {
     let photo = this.state.photo;
+    console.log(photo);
     //
     // let photoCheck = PhotoStore.find(this.id);
     //
@@ -87,6 +89,13 @@ const PhotoDetail = React.createClass({
                   onBlur={this.handleExit}
                   value={this.state.photo.description}/>
         <img  className={"photo-detail-img"} src={photo.photo_url}/>
+          {
+          photo.comments.map( (comment) => {
+              return (
+                <li className="comment-item" key={comment.id}>{comment.body}</li>
+              );
+            })
+          }
       </div>
     );
   }

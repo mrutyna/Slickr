@@ -18,3 +18,5 @@ photo_url: "https://res.cloudinary.com/mrcapstone/image/upload/v1467753257/nokoc
 Photo.create({title: "More Lazers!",
 user_id: 1,description: "My eyes!!!!",
 photo_url: "https://res.cloudinary.com/mrcapstone/image/upload/v1467754817/v3pdrfhovhwgwtfqnrlq.gif"})
+Comment.create({body: "First Comment", user_id: 1, photo_id: 1})
+Comment.create({body: "Second Comment", user_id: 1, photo_id: 1})
