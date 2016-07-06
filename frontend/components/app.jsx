@@ -19,7 +19,7 @@ const App = React.createClass({
       <div>
         <NavBar />
         <header>
-          <Link to="/photos" className="header-link"><h1>Sir Capstone, III</h1></Link>
+          <Link to="/photos" className="header"><h1>Sir Capstone, III</h1></Link>
         </header>
         {this.props.children}
       </div>
