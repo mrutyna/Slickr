@@ -18,7 +18,7 @@
     padding: 0;
 }
 html, body {
-    background: #C3AEFF;
+    background: #FFF;
     font-family: helvetica, arial;
     font-size: 20px;
     color: black;
@@ -52,7 +52,7 @@ a:hover {
     height: 60px;
     background-color: white;
     margin: -10px;
-    box-shadow: 0px 10px 26px 0px rgba(255,255,255,0.6);
+    box-shadow: 0px 10px 26px 0px rgba(0,0,0,0.6);
 }
 a.header {
     width: 200px;
@@ -148,6 +148,7 @@ input:hover, .btn:hover {
 }
 .main {
     margin-top: 50px;
+    margin: 50px 20px 0 20px;
 }
 ul.photo-index {
     list-style-type: none;
@@ -156,7 +157,21 @@ ul.photo-index li {
     display: inline-block;
 }
 .photo-url-index-item {
-    width: 200px;
-    height: 200px;
+    width: 400px;
+    height: 400px;
     overflow-y: hidden;
+    padding: 30px;
+}
+.photo-url-index-item img {
+    width: 400px;
+    height: 400px;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 10px 10px 36px -1px rgba(0,0,0,0.64);
+}
+.photo-url-index-item img:hover {
+    opacity: 0.8;
+}
+.photo-detail-title {
+    border-bottom: 5px dashed #1E0073;
 }

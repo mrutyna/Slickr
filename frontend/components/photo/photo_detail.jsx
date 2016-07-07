@@ -87,6 +87,7 @@ const PhotoDetail = React.createClass({
     // let className = (!empty ? "photo-detail-container" : "hidden");
 
     return (
+      <div className="main">
       <div className={"photo-detail"}>
         <h1 className={"photo-detail-title"}>{photo.title}</h1>
         <div className="btn back-button" onClick={() => hashHistory.push("photos")}>Back to All Photos</div>
@@ -103,6 +104,7 @@ const PhotoDetail = React.createClass({
             })
           }
           <CommentForm className="comment-form" photoId={photo.id} />
+      </div>
       </div>
     );
   }
