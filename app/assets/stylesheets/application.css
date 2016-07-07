@@ -211,5 +211,11 @@ ul.photo-index li {
     word-wrap: break-word;
 }
 .comment-item {
-    padding: 5px 0;
+    padding: 10px;
+}
+.comment-item:nth-child(even) {
+    background-color: #f0ebff;
+}
+.comment-item:nth-child(odd) {
+    background-color: #e4daff;
 }
