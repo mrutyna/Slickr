@@ -207,9 +207,9 @@ ul.photo-index li {
     font-size: 14px;
     border: 2px solid #1E0073;
     padding: 20px;
-    overflow-y: scroll;
+    overflow: scroll;
+    word-wrap: break-word;
 }
 .comment-item {
     padding: 5px 0;
-    width: 500px;
 }
