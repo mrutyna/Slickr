@@ -32,11 +32,10 @@ const NavBarRight = React.createClass({
     if (SessionStore.isUserLoggedIn()) {
 
     return (
-    		<hgroup className="header-group">
-    			<h2 className="header-name">Hi, {SessionStore.currentUser().username}!</h2>
-    			<input className="header-button" type="submit" value="logout" onClick={ SessionActions.logOut } />
-          <button onClick={this.uploadImage}>Upload Image</button>
-    		</hgroup>
+    		<div className='navbar-right'>
+    			<a className="header-button" onClick={ SessionActions.logOut }>Log Out</a>
+          <a className="upload-button" onClick={this.uploadImage}>Upload Image</a>
+    		</div>
     	);
 
     }  else {

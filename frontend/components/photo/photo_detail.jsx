@@ -89,7 +89,7 @@ const PhotoDetail = React.createClass({
     return (
       <div className={"photo-detail"}>
         <h1 className={"photo-detail-title"}>{photo.title}</h1>
-        <button className="back-button" onClick={() => hashHistory.push("photos")}>Back to All Photos</button>
+        <div className="btn back-button" onClick={() => hashHistory.push("photos")}>Back to All Photos</div>
         <textarea className={"photo-detail-textarea"}
                   onChange={this.onChange}
                   onBlur={this.handleExit}

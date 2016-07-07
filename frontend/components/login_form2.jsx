@@ -139,8 +139,6 @@ const LoginForm = React.createClass({
     } else {
       navLink = <Link to="/login">log in instead</Link>;
     }
-    
-    document.getElementById("body").className = "splash-page";
 
 		return (
 			<Modal isOpen={true}

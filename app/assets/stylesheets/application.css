@@ -13,13 +13,33 @@
  *= require_tree .
  *= require_self
  */
-.splash-page {
-    background: #C3AEFF url('http://res.cloudinary.com/mrcapstone/image/upload/v1467848430/download_1_drknsu.png') no-repeat;
+* {
+    margin: 0;
+    padding: 0;
 }
-body {
+html, body {
+    background: #C3AEFF;
     font-family: helvetica, arial;
     font-size: 20px;
     color: black;
+}
+#fullscreen-bg {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: -100;
+    margin-right: -10px;
+    margin-left: -10px;
+}
+.fullscreen-bg__video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 a {
     color: #1E0073;
@@ -32,7 +52,7 @@ a:hover {
     height: 60px;
     background-color: white;
     margin: -10px;
-    box-shadow: 0px 10px 26px 0px rgba(0,0,0,0.6);
+    box-shadow: 0px 10px 26px 0px rgba(255,255,255,0.6);
 }
 a.header {
     width: 200px;
@@ -59,6 +79,7 @@ a.header h1 {
     font-weight: bold;
     transition: background-color 0.5s;
     background-color: white;
+    cursor: pointer;
 }
 .navbar-right a:hover {
     color: #FFF;
@@ -87,14 +108,14 @@ input:hover, .btn:hover {
     background-color: #A180FF;
 }
 .ReactModalPortal {
-    width: 400px;
+    width: 350px;
     height: 300px;
-    background-color: white;
+    background-color: rgba(255,255,255,0.9);
     position: fixed;
     top: 50%;
     margin-top: -200px;
     left: 50%;
-    margin-left: -200px;
+    margin-left: -175px;
     border-radius: 15px;
     box-shadow: 10px 10px 36px -1px rgba(0,0,0,0.64);
 }
@@ -124,4 +145,13 @@ input:hover, .btn:hover {
 }
 .login-form {
     margin: 10px 0;
+}
+.main {
+    margin-top: 50px;
+}
+ul.photo-index {
+    list-style-type: none;
+}
+ul.photo-index li {
+    display: inline-block;
 }

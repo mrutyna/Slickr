@@ -33,9 +33,9 @@ const PhotoIndex = React.createClass({
     let photoKeys = Object.keys(this.state.photos);
 
     return (
-      <div>
+      <div className="main">
       <div className="photo-index-container">
-        <div className="photo-index">
+        <ul className="photo-index">
             {
               photoKeys.map( key => {
                 return (
@@ -43,7 +43,7 @@ const PhotoIndex = React.createClass({
                 );
               })
             }
-        </div>
+        </ul>
       </div>
       {this.props.children}
       </div>

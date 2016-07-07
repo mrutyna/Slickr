@@ -5,6 +5,7 @@ const NavBarRight = require('./navbar_right.jsx');
 const Link = require('react-router').Link;
 
 const NavBar = React.createClass({
+  
 
   render () {
     return(

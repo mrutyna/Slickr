@@ -6,6 +6,8 @@ const SessionStore = require('../stores/session_store');
 const SessionActions = require('../actions/session_actions');
 const NavBar = require('../components/navbar/navbar.jsx');
 
+const HomeVideo = require('./home_video.jsx');
+
 const ReactRouter = require('react-router');
 const hashHistory = ReactRouter.hashHistory;
 
@@ -18,15 +20,11 @@ const App = React.createClass({
   },
 
   render() {
-    if (this.props.location.pathname === "/") {
-    document.getElementById("body").className = "splash-page";
-    } else {
-      document.getElementById("body").className = "";
-    }
-    
+
     return (
       <div>
         <NavBar />
+        <HomeVideo location={this.props.location}/>
         {this.props.children}
       </div>
     );
