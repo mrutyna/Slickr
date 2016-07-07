@@ -194,18 +194,22 @@ ul.photo-index li {
     padding: 20px;
     margin: 0 auto;
     width: 30%;
-    height: 30px;
+    height: 50px;
     resize: none;
     text-transform: none;
     font-size: 14px;
     letter-spacing: normal;
 }
 .comment-list {
-    width: 200px;
+    width: 50%;
     margin: 50px auto;
     list-style-type: none;
     font-size: 14px;
+    border: 2px solid #1E0073;
+    padding: 20px;
+    overflow-y: scroll;
 }
 .comment-item {
     padding: 5px 0;
+    width: 500px;
 }

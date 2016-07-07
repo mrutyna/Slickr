@@ -97,15 +97,15 @@ const PhotoDetail = React.createClass({
                   value={this.state.photo.description}/>
         <div className="btn back-button" onClick={() => hashHistory.push("photos")}>Back to All Photos</div>
         <CommentForm className="comment-form" photoId={photo.id} />
-        <ul className="comment-list">
+        <div className="comment-list">
           {
           photo.comments.map( (comment) => {
               return (
-                <li className="comment-item" key={comment.id}>{comment.body}</li>
+                <p className="comment-item" key={comment.id}>{comment.body}</p>
               );
             })
           }
-          </ul>
+        </div>
       </div>
       </div>
     );
