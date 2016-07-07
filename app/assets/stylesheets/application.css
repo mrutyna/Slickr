@@ -155,3 +155,8 @@ ul.photo-index {
 ul.photo-index li {
     display: inline-block;
 }
+.photo-url-index-item {
+    width: 200px;
+    height: 200px;
+    overflow-y: hidden;
+}
