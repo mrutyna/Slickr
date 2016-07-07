@@ -182,12 +182,15 @@ ul.photo-index li {
     display: block;
     border-radius: 20px;
     margin: 50px auto;
+    box-shadow: 10px 10px 36px -1px rgba(0,0,0,0.64);
+    max-width: 80%;
 }
 .comment-form-submit-btn, .back-button {
     padding: 10px;
     display: block;
     margin: 20px auto;
     width: 200px;
+    box-shadow: 10px 10px 36px -1px rgba(0,0,0,0.64);
 }
 .comment-form-textarea, .photo-detail-textarea {
     display: block;
@@ -208,6 +211,7 @@ ul.photo-index li {
     padding: 20px;
     overflow: scroll;
     word-wrap: break-word;
+    box-shadow: 10px 10px 36px -1px rgba(0,0,0,0.64);
 }
 .comment-item {
     padding: 20px 10px;
@@ -216,5 +220,5 @@ ul.photo-index li {
     background-color: #fff;
 }
 .comment-item:nth-child(odd) {
-    background-color: #FFE3AA;
+    background-color: #f5f4f2;
 }
