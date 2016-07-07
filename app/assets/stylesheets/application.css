@@ -13,7 +13,115 @@
  *= require_tree .
  *= require_self
  */
-
+.splash-page {
+    background: #C3AEFF url('http://res.cloudinary.com/mrcapstone/image/upload/v1467848430/download_1_drknsu.png') no-repeat;
+}
 body {
-    background: black;
+    font-family: helvetica, arial;
+    font-size: 20px;
+    color: black;
+}
+a {
+    color: #1E0073;
+    text-decoration: none;
+}
+a:hover {
+    color: #581CFF;
+}
+.navbar {
+    height: 60px;
+    background-color: white;
+    margin: -10px;
+    box-shadow: 0px 10px 26px 0px rgba(0,0,0,0.6);
+}
+a.header {
+    width: 200px;
+    float: right;
+    text-align: right;
+}
+a.header h1 {
+    padding: 10px 100px 20px 20px;
+    font-size: 40px;
+    margin: 0;
+}
+.navbar-right {
+    padding: 0 20px 0 100px;
+    font-size: 16px;
+    height: 60px;
+}
+.navbar-right a {
+    display: inline-block;
+    height: 25px;
+    margin-right: 20px;
+    padding: 25px 10px 10px 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+    transition: background-color 0.5s;
+    background-color: white;
+}
+.navbar-right a:hover {
+    color: #FFF;
+    background-color: #A180FF;
+}
+input, .btn {
+    font-size: 10px;
+    text-align: center;
+    background-color: #C3AEFF;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border: 0;
+    margin: 5px 5px 5px 0;
+    transition: background-color 0.5s;
+    display: inline-block;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+input {
+    width: 50%;
+    height: 20px;
+}
+input:hover, .btn:hover {
+    background-color: #A180FF;
+}
+.ReactModalPortal {
+    width: 400px;
+    height: 300px;
+    background-color: white;
+    position: fixed;
+    top: 50%;
+    margin-top: -200px;
+    left: 50%;
+    margin-left: -200px;
+    border-radius: 15px;
+    box-shadow: 10px 10px 36px -1px rgba(0,0,0,0.64);
+}
+.log-in-modal-content {
+    padding: 30px;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 2px;
+    line-height: 25px;
+}
+.log-in-modal-content label {
+    margin: 5px 0;
+}
+.closeModalButton {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    cursor: pointer;
+    background-color: transparent;
+    border: 0;
+}
+.login-form-container {
+    position: relative;
+    top: 20px;
+}
+.login-form {
+    margin: 10px 0;
 }

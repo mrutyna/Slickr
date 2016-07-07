@@ -6,6 +6,9 @@ const SessionStore = require('../stores/session_store');
 const SessionActions = require('../actions/session_actions');
 const NavBar = require('../components/navbar/navbar.jsx');
 
+const ReactRouter = require('react-router');
+const hashHistory = ReactRouter.hashHistory;
+
 
 
 const App = React.createClass({
@@ -15,12 +18,15 @@ const App = React.createClass({
   },
 
   render() {
+    if (this.props.location.pathname === "/") {
+    document.getElementById("body").className = "splash-page";
+    } else {
+      document.getElementById("body").className = "";
+    }
+    
     return (
       <div>
         <NavBar />
-        <header>
-          <Link to="/photos" className="header"><h1>Sir Capstone, III</h1></Link>
-        </header>
         {this.props.children}
       </div>
     );

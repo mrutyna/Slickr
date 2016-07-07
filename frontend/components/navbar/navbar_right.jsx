@@ -43,8 +43,8 @@ const NavBarRight = React.createClass({
 
     return (
       <div className='navbar-right'>
-        <Link to="/signup" className="navigation-link">Sign Up!</Link>
-        <Link to="/login" className="navigation-link">Log In!</Link>
+        <Link to="/signup" className="navigation-link">Sign Up</Link>
+        <Link to="/login" className="navigation-link">Log In</Link>
 
       </div>
     );

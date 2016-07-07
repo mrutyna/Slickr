@@ -139,44 +139,44 @@ const LoginForm = React.createClass({
     } else {
       navLink = <Link to="/login">log in instead</Link>;
     }
+    
+    document.getElementById("body").className = "splash-page";
 
 		return (
 			<Modal isOpen={true}
-							onRequestClose={this.closeModal}>
+							onRequestClose={this.closeModal}
+							className="log-in-modal-content"
+							overlayClassName="log-in-modal-overlay">
 
-			<button onClick={this.closeModal}>X</button>
+			<button className="closeModalButton" onClick={this.closeModal}>X</button>
 			<div className="login-form-container">
-				<form onSubmit={this.handleSubmit} className="login-form-box">
+				<form className="login-form-box">
 	        Welcome!
 					<br/>
 					Please { this.formType() } or { navLink }
 
 	        { this.fieldErrors("base") }
 					<div className="login-form">
-		        <br />
-						<label> Username:
+						<label> Username&nbsp;
 		          { this.fieldErrors("username") }
 							<input type="text"
 		            value={this.state.username}
 		            onChange={this.update("username")}
 								className="login-input" />
-						</label>
-
-		        <br />
-						<label> Password:
+						</label><br />
+						<label> Password&nbsp;
 		          { this.fieldErrors("password") }
 		          <input type="password"
 		            value={this.state.password}
 		            onChange={this.update("password")}
 								className="login-input" />
 						</label>
-
-		        <br />
-						<input type="submit" value="Submit" />
-					</div>
-					<div id="demo-login-btn" className="modal-submit-btn"	onClick={this.demoLoginHandler}>
+		        <br /><br/>
+						<div className="btn log-in-submit" onClick={this.handleSubmit}>Submit</div>
+						<div id="demo-login-btn" className="btn modal-submit-btn"	onClick={this.demoLoginHandler}>
 						Demo Login
-				 </div>
+						</div>
+					</div>
 				</form>
 			</div>
 		</Modal>
