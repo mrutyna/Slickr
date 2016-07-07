@@ -46,9 +46,7 @@ var CommentForm = React.createClass({
               onChange={this.bodyChange}
               placeholder="What's on your mind?"
               ></textarea>
-            <div className="comment-form-action-btns">
-              <input type="submit" className="comment-form-submit-btn" value="Comment"/>
-            </div>
+              <div className="btn comment-form-submit-btn" onClick={this.submitHandler}>Comment</div>
           </form>
         </div>
 

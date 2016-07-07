@@ -18,7 +18,7 @@
     padding: 0;
 }
 html, body {
-    background: #FFF;
+    background: #F6F6F6;
     font-family: helvetica, arial;
     font-size: 20px;
     color: black;
@@ -85,7 +85,7 @@ a.header h1 {
     color: #FFF;
     background-color: #A180FF;
 }
-input, .btn {
+input, .btn, textarea {
     font-size: 10px;
     text-align: center;
     background-color: #C3AEFF;
@@ -152,11 +152,12 @@ input:hover, .btn:hover {
 }
 ul.photo-index {
     list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
 }
 ul.photo-index li {
-    display: inline-block;
-}
-.photo-url-index-item {
     width: 400px;
     height: 400px;
     overflow-y: hidden;
@@ -173,5 +174,38 @@ ul.photo-index li {
     opacity: 0.8;
 }
 .photo-detail-title {
-    border-bottom: 5px dashed #1E0073;
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+}
+.photo-detail-img {
+    display: block;
+    border-radius: 20px;
+    margin: 50px auto;
+}
+.comment-form-submit-btn, .back-button {
+    padding: 10px;
+    display: block;
+    margin: 20px auto;
+    width: 200px;
+}
+.comment-form-textarea, .photo-detail-textarea {
+    display: block;
+    padding: 20px;
+    margin: 0 auto;
+    width: 30%;
+    height: 30px;
+    resize: none;
+    text-transform: none;
+    font-size: 14px;
+    letter-spacing: normal;
+}
+.comment-list {
+    width: 200px;
+    margin: 50px auto;
+    list-style-type: none;
+    font-size: 14px;
+}
+.comment-item {
+    padding: 5px 0;
 }

@@ -90,12 +90,14 @@ const PhotoDetail = React.createClass({
       <div className="main">
       <div className={"photo-detail"}>
         <h1 className={"photo-detail-title"}>{photo.title}</h1>
-        <div className="btn back-button" onClick={() => hashHistory.push("photos")}>Back to All Photos</div>
+        <img  className={"photo-detail-img"} src={photo.photo_url}/>
         <textarea className={"photo-detail-textarea"}
                   onChange={this.onChange}
                   onBlur={this.handleExit}
                   value={this.state.photo.description}/>
-        <img  className={"photo-detail-img"} src={photo.photo_url}/>
+        <div className="btn back-button" onClick={() => hashHistory.push("photos")}>Back to All Photos</div>
+        <CommentForm className="comment-form" photoId={photo.id} />
+        <ul className="comment-list">
           {
           photo.comments.map( (comment) => {
               return (
@@ -103,7 +105,7 @@ const PhotoDetail = React.createClass({
               );
             })
           }
-          <CommentForm className="comment-form" photoId={photo.id} />
+          </ul>
       </div>
       </div>
     );
