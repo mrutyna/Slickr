@@ -11641,15 +11641,15 @@ return jQuery;
 	var hashHistory = ReactRouter.hashHistory;
 	//Components
 	var App = __webpack_require__(230);
-	var LoginForm2 = __webpack_require__(263);
+	var LoginForm2 = __webpack_require__(264);
 	//Auth
 	var SessionStore = __webpack_require__(231);
 	var SessionActions = __webpack_require__(254);
 	
-	var Modal = __webpack_require__(265);
+	var Modal = __webpack_require__(266);
 	
-	var PhotoIndex = __webpack_require__(285);
-	var PhotoDetail = __webpack_require__(287);
+	var PhotoIndex = __webpack_require__(286);
+	var PhotoDetail = __webpack_require__(288);
 	
 	var appRouter = React.createElement(
 	  Router,
@@ -37567,29 +37567,23 @@ return jQuery;
 	var SessionActions = __webpack_require__(254);
 	var NavBar = __webpack_require__(258);
 	
+	var HomeVideo = __webpack_require__(263);
+	
+	var ReactRouter = __webpack_require__(168);
+	var hashHistory = ReactRouter.hashHistory;
+	
 	var App = React.createClass({
 	  displayName: 'App',
 	  componentDidMount: function componentDidMount() {
 	    SessionStore.addListener(this.forceUpdate.bind(this));
 	  },
 	  render: function render() {
+	
 	    return React.createElement(
 	      'div',
 	      null,
 	      React.createElement(NavBar, null),
-	      React.createElement(
-	        'header',
-	        null,
-	        React.createElement(
-	          Link,
-	          { to: '/photos', className: 'header-link' },
-	          React.createElement(
-	            'h1',
-	            null,
-	            'Sir Capstone, III'
-	          )
-	        )
-	      ),
+	      React.createElement(HomeVideo, { location: this.props.location }),
 	      this.props.children
 	    );
 	  }
@@ -44573,12 +44567,27 @@ return jQuery;
 	
 	var NavBarRight = __webpack_require__(259);
 	
+	var Link = __webpack_require__(168).Link;
+	
 	var NavBar = React.createClass({
 	  displayName: 'NavBar',
 	  render: function render() {
 	    return React.createElement(
 	      'div',
 	      { className: 'navbar' },
+	      React.createElement(
+	        'header',
+	        null,
+	        React.createElement(
+	          Link,
+	          { to: '/photos', className: 'header' },
+	          React.createElement(
+	            'h1',
+	            null,
+	            'Slickr'
+	          )
+	        )
+	      ),
 	      React.createElement(NavBarRight, null)
 	    );
 	  }
@@ -44626,19 +44635,16 @@ return jQuery;
 	    if (SessionStore.isUserLoggedIn()) {
 	
 	      return React.createElement(
-	        'hgroup',
-	        { className: 'header-group' },
+	        'div',
+	        { className: 'navbar-right' },
 	        React.createElement(
-	          'h2',
-	          { className: 'header-name' },
-	          'Hi, ',
-	          SessionStore.currentUser().username,
-	          '!'
+	          'a',
+	          { className: 'header-button', onClick: SessionActions.logOut },
+	          'Log Out'
 	        ),
-	        React.createElement('input', { className: 'header-button', type: 'submit', value: 'logout', onClick: SessionActions.logOut }),
 	        React.createElement(
-	          'button',
-	          { onClick: this.uploadImage },
+	          'a',
+	          { className: 'upload-button', onClick: this.uploadImage },
 	          'Upload Image'
 	        )
 	      );
@@ -44650,12 +44656,12 @@ return jQuery;
 	        React.createElement(
 	          Link,
 	          { to: '/signup', className: 'navigation-link' },
-	          'Sign Up!'
+	          'Sign Up'
 	        ),
 	        React.createElement(
 	          Link,
 	          { to: '/login', className: 'navigation-link' },
-	          'Log In!'
+	          'Log In'
 	        )
 	      );
 	    }
@@ -44848,15 +44854,75 @@ return jQuery;
 
 	"use strict";
 	
+	var React = __webpack_require__(1);
+	var ReactDOM = __webpack_require__(38);
+	
+	var ReactRouter = __webpack_require__(168);
+	var hashHistory = ReactRouter.hashHistory;
+	
+	var HomeVideo = React.createClass({
+	  displayName: "HomeVideo",
+	  getInitialState: function getInitialState() {
+	    if (!["/", "/login", "/signup"].includes(this.props.location.pathname)) {
+	      return { show: false };
+	    } else {
+	      return { show: true };
+	    }
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	    var background = void 0;
+	
+	    if (!["/", "/login", "/signup"].includes(newProps.location.pathname)) {
+	      this.setState({ show: false });
+	    } else {
+	      this.setState({ show: true });
+	    }
+	  },
+	  render: function render() {
+	
+	    var show = void 0;
+	
+	    if (this.state.show) {
+	      show = React.createElement(
+	        "div",
+	        { className: "splash-page", id: "fullscreen-bg" },
+	        React.createElement(
+	          "video",
+	          { loop: true, muted: true, autoPlay: true, poster: "http://res.cloudinary.com/mrcapstone/image/upload/v1467852561/Blurry-Lights_pl2rqd.jpg", className: "fullscreen-bg__video" },
+	          React.createElement("source", { src: "http://res.cloudinary.com/mrcapstone/video/upload/v1467852566/Blurry-Lights_ynqyk2.webm", type: "video/webm" }),
+	          React.createElement("source", { src: "http://res.cloudinary.com/mrcapstone/video/upload/v1467852568/Blurry-Lights_kwoqqm.mp4", type: "video/mp4" }),
+	          React.createElement("source", { src: "http://res.cloudinary.com/mrcapstone/video/upload/v1467852568/Blurry-Lights_jyluqb.ogv", type: "video/ogg" })
+	        )
+	      );
+	    } else {
+	      show = React.createElement("div", { className: "thisVideoWasHidden" });
+	    }
+	
+	    return React.createElement(
+	      "div",
+	      null,
+	      show
+	    );
+	  }
+	});
+	
+	module.exports = HomeVideo;
+
+/***/ },
+/* 264 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
 	var React = __webpack_require__(1);
 	var Link = __webpack_require__(168).Link;
 	var SessionActions = __webpack_require__(254);
 	var SessionStore = __webpack_require__(231);
-	var ErrorStore = __webpack_require__(264);
+	var ErrorStore = __webpack_require__(265);
 	
-	var Modal = __webpack_require__(265);
+	var Modal = __webpack_require__(266);
 	
 	var LoginForm = React.createClass({
 		displayName: 'LoginForm',
@@ -45013,10 +45079,12 @@ return jQuery;
 			return React.createElement(
 				Modal,
 				{ isOpen: true,
-					onRequestClose: this.closeModal },
+					onRequestClose: this.closeModal,
+					className: 'log-in-modal-content',
+					overlayClassName: 'log-in-modal-overlay' },
 				React.createElement(
 					'button',
-					{ onClick: this.closeModal },
+					{ className: 'closeModalButton', onClick: this.closeModal },
 					'X'
 				),
 				React.createElement(
@@ -45024,7 +45092,7 @@ return jQuery;
 					{ className: 'login-form-container' },
 					React.createElement(
 						'form',
-						{ onSubmit: this.handleSubmit, className: 'login-form-box' },
+						{ className: 'login-form-box' },
 						'Welcome!',
 						React.createElement('br', null),
 						'Please ',
@@ -45035,11 +45103,10 @@ return jQuery;
 						React.createElement(
 							'div',
 							{ className: 'login-form' },
-							React.createElement('br', null),
 							React.createElement(
 								'label',
 								null,
-								' Username:',
+								' Username ',
 								this.fieldErrors("username"),
 								React.createElement('input', { type: 'text',
 									value: this.state.username,
@@ -45050,7 +45117,7 @@ return jQuery;
 							React.createElement(
 								'label',
 								null,
-								' Password:',
+								' Password ',
 								this.fieldErrors("password"),
 								React.createElement('input', { type: 'password',
 									value: this.state.password,
@@ -45058,12 +45125,17 @@ return jQuery;
 									className: 'login-input' })
 							),
 							React.createElement('br', null),
-							React.createElement('input', { type: 'submit', value: 'Submit' })
-						),
-						React.createElement(
-							'div',
-							{ id: 'demo-login-btn', className: 'modal-submit-btn', onClick: this.demoLoginHandler },
-							'Demo Login'
+							React.createElement('br', null),
+							React.createElement(
+								'div',
+								{ className: 'btn log-in-submit', onClick: this.handleSubmit },
+								'Submit'
+							),
+							React.createElement(
+								'div',
+								{ id: 'demo-login-btn', className: 'btn modal-submit-btn', onClick: this.demoLoginHandler },
+								'Demo Login'
+							)
 						)
 					)
 				)
@@ -45074,7 +45146,7 @@ return jQuery;
 	module.exports = LoginForm;
 
 /***/ },
-/* 264 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -45132,25 +45204,25 @@ return jQuery;
 	module.exports = ErrorStore;
 
 /***/ },
-/* 265 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(266);
+	module.exports = __webpack_require__(267);
 	
 
 
 /***/ },
-/* 266 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(38);
-	var ExecutionEnvironment = __webpack_require__(267);
-	var ModalPortal = React.createFactory(__webpack_require__(268));
-	var ariaAppHider = __webpack_require__(283);
-	var elementClass = __webpack_require__(284);
+	var ExecutionEnvironment = __webpack_require__(268);
+	var ModalPortal = React.createFactory(__webpack_require__(269));
+	var ariaAppHider = __webpack_require__(284);
+	var elementClass = __webpack_require__(285);
 	var renderSubtreeIntoContainer = __webpack_require__(38).unstable_renderSubtreeIntoContainer;
-	var Assign = __webpack_require__(272);
+	var Assign = __webpack_require__(273);
 	
 	var SafeHTMLElement = ExecutionEnvironment.canUseDOM ? window.HTMLElement : {};
 	var AppElement = ExecutionEnvironment.canUseDOM ? document.body : {appendChild: function() {}};
@@ -45258,7 +45330,7 @@ return jQuery;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 267 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -45303,14 +45375,14 @@ return jQuery;
 
 
 /***/ },
-/* 268 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var div = React.DOM.div;
-	var focusManager = __webpack_require__(269);
-	var scopeTab = __webpack_require__(271);
-	var Assign = __webpack_require__(272);
+	var focusManager = __webpack_require__(270);
+	var scopeTab = __webpack_require__(272);
+	var Assign = __webpack_require__(273);
 	
 	// so that our CSS is statically analyzable
 	var CLASS_NAMES = {
@@ -45495,10 +45567,10 @@ return jQuery;
 
 
 /***/ },
-/* 269 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var findTabbable = __webpack_require__(270);
+	var findTabbable = __webpack_require__(271);
 	var modalElement = null;
 	var focusLaterElement = null;
 	var needToFocus = false;
@@ -45569,7 +45641,7 @@ return jQuery;
 
 
 /***/ },
-/* 270 */
+/* 271 */
 /***/ function(module, exports) {
 
 	/*!
@@ -45625,10 +45697,10 @@ return jQuery;
 
 
 /***/ },
-/* 271 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var findTabbable = __webpack_require__(270);
+	var findTabbable = __webpack_require__(271);
 	
 	module.exports = function(node, event) {
 	  var tabbable = findTabbable(node);
@@ -45650,7 +45722,7 @@ return jQuery;
 
 
 /***/ },
-/* 272 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45661,9 +45733,9 @@ return jQuery;
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var baseAssign = __webpack_require__(273),
-	    createAssigner = __webpack_require__(279),
-	    keys = __webpack_require__(275);
+	var baseAssign = __webpack_require__(274),
+	    createAssigner = __webpack_require__(280),
+	    keys = __webpack_require__(276);
 	
 	/**
 	 * A specialized version of `_.assign` for customizing assigned values without
@@ -45736,7 +45808,7 @@ return jQuery;
 
 
 /***/ },
-/* 273 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45747,8 +45819,8 @@ return jQuery;
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var baseCopy = __webpack_require__(274),
-	    keys = __webpack_require__(275);
+	var baseCopy = __webpack_require__(275),
+	    keys = __webpack_require__(276);
 	
 	/**
 	 * The base implementation of `_.assign` without support for argument juggling,
@@ -45769,7 +45841,7 @@ return jQuery;
 
 
 /***/ },
-/* 274 */
+/* 275 */
 /***/ function(module, exports) {
 
 	/**
@@ -45807,7 +45879,7 @@ return jQuery;
 
 
 /***/ },
-/* 275 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45818,9 +45890,9 @@ return jQuery;
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var getNative = __webpack_require__(276),
-	    isArguments = __webpack_require__(277),
-	    isArray = __webpack_require__(278);
+	var getNative = __webpack_require__(277),
+	    isArguments = __webpack_require__(278),
+	    isArray = __webpack_require__(279);
 	
 	/** Used to detect unsigned integer values. */
 	var reIsUint = /^\d+$/;
@@ -46049,7 +46121,7 @@ return jQuery;
 
 
 /***/ },
-/* 276 */
+/* 277 */
 /***/ function(module, exports) {
 
 	/**
@@ -46192,7 +46264,7 @@ return jQuery;
 
 
 /***/ },
-/* 277 */
+/* 278 */
 /***/ function(module, exports) {
 
 	/**
@@ -46441,7 +46513,7 @@ return jQuery;
 
 
 /***/ },
-/* 278 */
+/* 279 */
 /***/ function(module, exports) {
 
 	/**
@@ -46627,7 +46699,7 @@ return jQuery;
 
 
 /***/ },
-/* 279 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -46638,9 +46710,9 @@ return jQuery;
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var bindCallback = __webpack_require__(280),
-	    isIterateeCall = __webpack_require__(281),
-	    restParam = __webpack_require__(282);
+	var bindCallback = __webpack_require__(281),
+	    isIterateeCall = __webpack_require__(282),
+	    restParam = __webpack_require__(283);
 	
 	/**
 	 * Creates a function that assigns properties of source object(s) to a given
@@ -46685,7 +46757,7 @@ return jQuery;
 
 
 /***/ },
-/* 280 */
+/* 281 */
 /***/ function(module, exports) {
 
 	/**
@@ -46756,7 +46828,7 @@ return jQuery;
 
 
 /***/ },
-/* 281 */
+/* 282 */
 /***/ function(module, exports) {
 
 	/**
@@ -46894,7 +46966,7 @@ return jQuery;
 
 
 /***/ },
-/* 282 */
+/* 283 */
 /***/ function(module, exports) {
 
 	/**
@@ -46967,7 +47039,7 @@ return jQuery;
 
 
 /***/ },
-/* 283 */
+/* 284 */
 /***/ function(module, exports) {
 
 	var _element = typeof document !== 'undefined' ? document.body : null;
@@ -47015,7 +47087,7 @@ return jQuery;
 
 
 /***/ },
-/* 284 */
+/* 285 */
 /***/ function(module, exports) {
 
 	module.exports = function(opts) {
@@ -47080,17 +47152,17 @@ return jQuery;
 
 
 /***/ },
-/* 285 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	var React = __webpack_require__(1);
 	// const PhotoForm = require('./photo_form');
-	var IndexItem = __webpack_require__(286);
+	var IndexItem = __webpack_require__(287);
 	
-	var PhotoDetail = __webpack_require__(287);
-	var PhotoStore = __webpack_require__(288);
+	var PhotoDetail = __webpack_require__(288);
+	var PhotoStore = __webpack_require__(289);
 	var PhotoActions = __webpack_require__(260);
 	
 	var PhotoIndex = React.createClass({
@@ -47119,12 +47191,12 @@ return jQuery;
 	
 	    return React.createElement(
 	      'div',
-	      null,
+	      { className: 'main' },
 	      React.createElement(
 	        'div',
 	        { className: 'photo-index-container' },
 	        React.createElement(
-	          'div',
+	          'ul',
 	          { className: 'photo-index' },
 	          photoKeys.map(function (key) {
 	            return React.createElement(IndexItem, { photo: _this.state.photos[key], key: key });
@@ -47140,7 +47212,7 @@ return jQuery;
 	module.exports = PhotoIndex;
 
 /***/ },
-/* 286 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -47214,17 +47286,17 @@ return jQuery;
 	module.exports = PhotoIndexItem;
 
 /***/ },
-/* 287 */
+/* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	var React = __webpack_require__(1);
 	var PhotoActions = __webpack_require__(260);
-	var PhotoStore = __webpack_require__(288);
+	var PhotoStore = __webpack_require__(289);
 	var hashHistory = __webpack_require__(168).hashHistory;
 	
-	var CommentForm = __webpack_require__(289);
+	var CommentForm = __webpack_require__(290);
 	
 	var PhotoDetail = React.createClass({
 	  displayName: 'PhotoDetail',
@@ -47298,32 +47370,40 @@ return jQuery;
 	
 	    return React.createElement(
 	      'div',
-	      { className: "photo-detail" },
+	      { className: 'main' },
 	      React.createElement(
-	        'h1',
-	        { className: "photo-detail-title" },
-	        photo.title
-	      ),
-	      React.createElement(
-	        'button',
-	        { className: 'back-button', onClick: function onClick() {
-	            return hashHistory.push("photos");
-	          } },
-	        'Back to All Photos'
-	      ),
-	      React.createElement('textarea', { className: "photo-detail-textarea",
-	        onChange: this.onChange,
-	        onBlur: this.handleExit,
-	        value: this.state.photo.description }),
-	      React.createElement('img', { className: "photo-detail-img", src: photo.photo_url }),
-	      photo.comments.map(function (comment) {
-	        return React.createElement(
-	          'li',
-	          { className: 'comment-item', key: comment.id },
-	          comment.body
-	        );
-	      }),
-	      React.createElement(CommentForm, { className: 'comment-form', photoId: photo.id })
+	        'div',
+	        { className: "photo-detail" },
+	        React.createElement(
+	          'h1',
+	          { className: "photo-detail-title" },
+	          photo.title
+	        ),
+	        React.createElement('img', { className: "photo-detail-img", src: photo.photo_url }),
+	        React.createElement('textarea', { className: "photo-detail-textarea",
+	          onChange: this.onChange,
+	          onBlur: this.handleExit,
+	          value: this.state.photo.description }),
+	        React.createElement(
+	          'div',
+	          { className: 'btn back-button', onClick: function onClick() {
+	              return hashHistory.push("photos");
+	            } },
+	          'Back to All Photos'
+	        ),
+	        React.createElement(CommentForm, { className: 'comment-form', photoId: photo.id }),
+	        React.createElement(
+	          'div',
+	          { className: 'comment-list' },
+	          photo.comments.map(function (comment) {
+	            return React.createElement(
+	              'p',
+	              { className: 'comment-item', key: comment.id },
+	              comment.body
+	            );
+	          })
+	        )
+	      )
 	    );
 	  }
 	});
@@ -47331,7 +47411,7 @@ return jQuery;
 	module.exports = PhotoDetail;
 
 /***/ },
-/* 288 */
+/* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -47394,7 +47474,7 @@ return jQuery;
 	module.exports = PhotoStore;
 
 /***/ },
-/* 289 */
+/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -47456,8 +47536,8 @@ return jQuery;
 	          }),
 	          React.createElement(
 	            "div",
-	            { className: "comment-form-action-btns" },
-	            React.createElement("input", { type: "submit", className: "comment-form-submit-btn", value: "Comment" })
+	            { className: "btn comment-form-submit-btn", onClick: this.submitHandler },
+	            "Comment"
 	          )
 	        )
 	      )
